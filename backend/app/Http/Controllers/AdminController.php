@@ -48,12 +48,21 @@ class AdminController extends Controller
     }
 
     
-    public function index()
-    {
-        return response()->json([
-            'message' => 'Welcome to Admin Dashboard'
-        ]);
-    }
+  public function dashboard(Request $request)
+{
+    $admin = $request->user(); // get logged admin
+
+    return response()->json([
+        'message' => 'Admin Dashboard',
+        'admin' => [
+            'id' => $admin->id,
+            'name' => $admin->name,
+            'email' => $admin->email,
+            'role' => $admin->role,
+            'created_at' => $admin->created_at->toDateTimeString()
+        ]
+    ]);
+}
 
     
      public function logout(Request $request)
