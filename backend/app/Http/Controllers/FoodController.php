@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Food;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FoodController extends Controller
 {
@@ -20,9 +21,20 @@ class FoodController extends Controller
             'fat' => 'nullable|numeric',
             'protein' => 'nullable|numeric',
             'salt' => 'nullable|numeric',
+            'description' => 'nullable|string',
+           // 'image' => 'nullable|string',
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp|max:2048',
+
+
+            'barcode' => 'nullable|string',
         ]);
 
-        // حساب grade تلقائي (يمكنك تعديلها حسب الحاجة)
+        if ($request->hasFile('image')) {
+          $path = $request->file('image')->store('foods', 'public');
+          $data['image'] = Storage::url($path);
+        }
+
+
         $grade = $this->calculateGrade($data['sugar'] ?? null, $data['fat'] ?? null);
         $data['grade'] = $grade;
 
@@ -58,7 +70,17 @@ class FoodController extends Controller
             return response()->json(['message' => 'Food not found'], 404);
         }
 
-        $data = $request->only(['name','calories','sugar','fat','protein','salt']);
+        $data = $request->only([
+            'name','calories','sugar','fat','protein','salt',
+            'description','image','barcode'
+        ]);
+
+        if ($request->hasFile('image')) {
+    $path = $request->file('image')->store('foods', 'public');
+    $data['image'] = Storage::url($path);
+}
+
+
         if (isset($data['sugar']) || isset($data['fat'])) {
             $data['grade'] = $this->calculateGrade($data['sugar'] ?? $food->sugar, $data['fat'] ?? $food->fat);
         }

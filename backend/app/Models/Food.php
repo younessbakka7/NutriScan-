@@ -8,6 +8,7 @@ class Food extends Model
 {
      protected $table = 'foods';
     protected $fillable = [
-    'name', 'calories', 'sugar', 'fat', 'protein', 'salt', 'grade'
+    'name', 'calories', 'sugar', 'fat', 'protein', 'salt', 'grade',  'image',
+    'barcode','description',
 ];
 }
