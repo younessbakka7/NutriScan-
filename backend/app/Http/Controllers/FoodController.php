@@ -23,9 +23,8 @@ class FoodController extends Controller
             'salt' => 'nullable|numeric',
             'description' => 'nullable|string',
            // 'image' => 'nullable|string',
-            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp|max:2048',
-
-
+            //'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:4096',
             'barcode' => 'nullable|string',
         ]);
 
@@ -97,5 +96,10 @@ class FoodController extends Controller
         }
         $food->delete();
         return response()->json(['message' => 'Food deleted'], 200);
+    }
+
+    public function test()
+    {
+        return response()->json(['message' => 'test ok'], 200);
     }
 }
