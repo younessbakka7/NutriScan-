@@ -62,6 +62,22 @@ class FoodController extends Controller
         return response()->json($food, 200);
     }
 
+
+    //filter by barcode
+    public function filterByBarcode($barcode)
+{
+    $food = Food::where('barcode', $barcode)->first();
+
+    if (!$food) {
+        return response()->json([
+            'message' => 'Food not found with this barcode'
+        ], 404);
+    }
+
+    return response()->json($food, 200);
+}
+
+
     public function update(Request $request, $id)
     {
         $food = Food::find($id);

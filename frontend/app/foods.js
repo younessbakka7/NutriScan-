@@ -1,4 +1,3 @@
-// Foods.js
 import React, { useEffect, useState } from "react";
 import { 
   View, Text, ScrollView, StyleSheet, ActivityIndicator, 
@@ -8,6 +7,8 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import EditFood from "./Editefoods";
 import CreateFood from "./AjouterFoods";
+import { FontAwesome5 } from '@expo/vector-icons';
+import { useRouter } from "expo-router";
 
 export default function Foods() {
   const [foods, setFoods] = useState([]);
@@ -15,6 +16,8 @@ export default function Foods() {
   const [error, setError] = useState(null);
   const [editingFood, setEditingFood] = useState(null);
   const [showCreate, setShowCreate] = useState(false);
+
+  const router = useRouter();
 
   const fetchFoods = async () => {
     try {
@@ -59,6 +62,11 @@ export default function Foods() {
     setEditingFood(null);
   };
 
+const handleViewDetails = (id) => {
+  router.push(`/fooddetails/${id}`);
+};
+
+   
   if (loading) return <View style={styles.center}><ActivityIndicator size="large" color="#4f6d7a" /></View>;
   if (error) return <View style={styles.center}><Text style={{ color: "red" }}>{error}</Text></View>;
   if (editingFood) return <EditFood food={editingFood} onUpdate={handleUpdate} />;
@@ -71,7 +79,8 @@ export default function Foods() {
       </View>
 
       <TouchableOpacity style={styles.addButton} onPress={() => setShowCreate(true)}>
-        <Text style={styles.buttonText}>Ajouter un aliment</Text>
+        <FontAwesome5 name="plus" size={18} color="#fff" />
+        <Text style={[styles.buttonText, { marginLeft: 8 }]}>Ajouter un aliment</Text>
       </TouchableOpacity>
 
       {showCreate && (
@@ -112,11 +121,20 @@ export default function Foods() {
               <Text style={styles.info}>Grade: {food.grade}</Text>
 
               <View style={styles.buttons}>
-                <TouchableOpacity style={styles.editButton} onPress={() => setEditingFood(food)}>
-                  <Text style={styles.buttonText}>Modifier</Text>
+                <TouchableOpacity style={styles.iconButton} onPress={() => setEditingFood(food)}>
+                  <FontAwesome5 name="edit" size={18} color="#fff" />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(food.id)}>
-                  <Text style={styles.buttonText}>Supprimer</Text>
+
+              <TouchableOpacity 
+                style={[styles.iconButton, { backgroundColor: "#28a745" }]} 
+                onPress={() => handleViewDetails(food.id)}
+              >
+              <FontAwesome5 name="info-circle" size={18} color="#fff" />
+              </TouchableOpacity>
+
+
+                <TouchableOpacity style={[styles.iconButton, { backgroundColor: "#ff4d4d" }]} onPress={() => handleDelete(food.id)}>
+                  <FontAwesome5 name="trash" size={18} color="#fff" />
                 </TouchableOpacity>
               </View>
             </View>
@@ -146,7 +164,7 @@ const styles = StyleSheet.create({
   card: { 
     backgroundColor: "#fff", 
     borderRadius: 12, 
-    overflow: "hidden", // important pour les coins arrondis
+    overflow: "hidden",
     marginBottom: 16,
     shadowColor: "#000",
     shadowOpacity: 0.1,
@@ -171,17 +189,12 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 12,
     borderBottomRightRadius: 12,
   },
-  overlayText: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 16,
-  },
+  overlayText: { color: "#fff", fontWeight: "bold", fontSize: 16 },
   name: { fontSize: 18, fontWeight: "bold", margin: 8, color: "#4f6d7a" },
   description: { marginBottom: 8, marginHorizontal: 8 },
   info: { marginBottom: 2, marginHorizontal: 8, color: "#333" },
-  buttons: { flexDirection: "row", justifyContent: "space-between", margin: 10 },
-  editButton: { backgroundColor: "#4f6d7a", padding: 10, borderRadius: 8, flex: 1, marginRight: 5 },
-  deleteButton: { backgroundColor: "#ff4d4d", padding: 10, borderRadius: 8, flex: 1, marginLeft: 5 },
+  buttons: { flexDirection: "row", justifyContent: "flex-end", margin: 10 },
+  iconButton: { backgroundColor: "#4f6d7a", padding: 10, borderRadius: 8, marginLeft: 8 },
   buttonText: { color: "#fff", fontWeight: "bold", textAlign: "center" },
-  addButton: { backgroundColor: "#4f6d7a", padding: 12, borderRadius: 10, margin: 16, alignItems: "center" }
+  addButton: { flexDirection: "row", backgroundColor: "#4f6d7a", padding: 12, borderRadius: 10, margin: 16, alignItems: "center", justifyContent: "center" }
 });

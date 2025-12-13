@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FoodController;
 
+//filter by Bar_Code
+Route::get('/foods/barcode/{barcode}', [FoodController::class, 'filterByBarcode']);
 
 
 Route::prefix('admin')->group(function () {
