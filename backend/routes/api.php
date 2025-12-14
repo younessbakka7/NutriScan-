@@ -3,9 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FoodController;
+use App\Http\Controllers\ClientController;
 
-//filter by Bar_Code
-Route::get('/foods/barcode/{barcode}', [FoodController::class, 'filterByBarcode']);
+
+
+    //filter by Bar_Code
+    Route::get('/foods/barcode/{barcode}', [FoodController::class, 'filterByBarcode']);
 
 
 Route::prefix('admin')->group(function () {
@@ -29,3 +32,19 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 });
+
+//client
+Route::post('/client/register', [ClientController::class, 'register']);
+Route::post('/client/login', [ClientController::class, 'login']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/client/dashboard', [ClientController::class, 'dashboard']);
+
+    Route::get('/client/profile', [ClientController::class, 'profile']);
+    Route::post('/client/logout', [ClientController::class, 'logout']);
+    Route::get('/foods', [FoodController::class, 'index']);    
+});
+
+
+
+

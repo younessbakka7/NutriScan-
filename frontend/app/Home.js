@@ -76,21 +76,52 @@ export default function Home() {
 }
 
 const screenWidth = Dimensions.get("window").width;
-const cardWidth = (screenWidth - 45) / 2;
+const cardWidth = (screenWidth - 40) / 2; 
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#f4f6f9", padding: 15 },
-  header: { backgroundColor: "#4f6d7a", padding: 20, borderRadius: 12, marginBottom: 20 },
-  headerTitle: { fontSize: 24, fontWeight: "bold", color: "#fff" },
-  headerSubtitle: { fontSize: 14, color: "#d1e0ff", marginTop: 5 },
-  statsCard: { backgroundColor: "#fff", padding: 20, borderRadius: 12, marginBottom: 25, alignItems: "center", shadowColor: "#000", shadowOpacity: 0.08, shadowRadius: 8, elevation: 5 },
-  statsTitle: { fontSize: 18, fontWeight: "bold", color: "#2c3e50" },
-  statsCount: { fontSize: 36, fontWeight: "bold", color: "#4f6d7a", marginTop: 10 },
-  sectionTitle: { fontSize: 20, fontWeight: "bold", color: "#2c3e50", marginBottom: 15 },
-  foodCard: { width: cardWidth, backgroundColor: "#fff", borderRadius: 12, shadowColor: "#000", shadowOpacity: 0.08, shadowRadius: 8, elevation: 5, overflow: "hidden" },
-  foodImage: { width: "100%", height: 120 },
-  foodInfo: { padding: 12 },
-  foodName: { fontSize: 16, fontWeight: "bold", color: "#2c3e50", marginBottom: 5 },
-  foodDetails: { fontSize: 12, color: "#495057", marginBottom: 3 },
-  grade: { paddingVertical: 4, paddingHorizontal: 10, borderRadius: 8, color: "#fff", fontWeight: "bold", alignSelf: "flex-start", marginTop: 5 },
+  container: { flex: 1, backgroundColor: "#f2f5f8", padding: 15 },
+  header: { backgroundColor: "#4f6d7a", padding: 18, borderRadius: 15, marginBottom: 20 },
+  headerTitle: { fontSize: 22, fontWeight: "700", color: "#fff" },
+  headerSubtitle: { fontSize: 14, color: "#d1e0ff", marginTop: 4 },
+  statsCard: {
+    backgroundColor: "#fff",
+    padding: 18,
+    borderRadius: 15,
+    marginBottom: 25,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 5 },
+    elevation: 6,
+  },
+  statsTitle: { fontSize: 17, fontWeight: "600", color: "#2c3e50" },
+  statsCount: { fontSize: 32, fontWeight: "700", color: "#4f6d7a", marginTop: 6 },
+  sectionTitle: { fontSize: 19, fontWeight: "700", color: "#2c3e50", marginBottom: 12 },
+  
+  foodCard: {
+    width: cardWidth,
+    backgroundColor: "#fff",
+    borderRadius: 15,
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 5 },
+    elevation: 5,
+    overflow: "hidden",
+  },
+  foodImage: { width: "100%", height: 100, resizeMode: "cover" },
+  foodInfo: { padding: 10 },
+  foodName: { fontSize: 15, fontWeight: "700", color: "#2c3e50", marginBottom: 4 },
+  foodDetails: { fontSize: 11, color: "#6c757d", marginBottom: 2 },
+  grade: {
+    paddingVertical: 3,
+    paddingHorizontal: 8,
+    borderRadius: 7,
+    color: "#fff",
+    fontWeight: "700",
+    alignSelf: "flex-start",
+    marginTop: 4,
+    fontSize: 11,
+  },
 });
