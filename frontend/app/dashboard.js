@@ -4,6 +4,8 @@ import { MaterialIcons, FontAwesome5, Entypo, Ionicons } from '@expo/vector-icon
 import Foods from "./foods";
 import Home from "./Home";
 import Settings from "./Settings";
+import Users from "./listUsers"; 
+import Favorites from "./AdminFavorites"; 
 import { useRouter } from "expo-router";
 import axios from "axios";
 
@@ -22,11 +24,11 @@ export default function Dashboard() {
 
   const handleLogout = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = await AsyncStorage.getItem("token");
       await axios.post("http://127.0.0.1:8000/api/admin/logout", {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      localStorage.removeItem("token");
+      await AsyncStorage.removeItem("token");
       router.push("/login");
     } catch (error) {
       console.log(error);
@@ -37,8 +39,10 @@ export default function Dashboard() {
   const renderContent = () => {
     switch(selectedTab) {
       case "Home": return <Home />;
+      case "Users": return <Users />; 
       case "Foods": return <Foods />;
       case "Settings": return <Settings />;
+      case "Favorites": return <Favorites />;
       default: return <Home />;
     }
   };

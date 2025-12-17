@@ -13,10 +13,12 @@ use App\Http\Controllers\ClientController;
 
 Route::prefix('admin')->group(function () {
     Route::post('login', [AdminController::class, 'login']);
-
     Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/users', [AdminController::class, 'clientList']);      
+    Route::delete('/users/{id}', [AdminController::class, 'clientdestroy']); 
     Route::get('dashboard', [AdminController::class, 'dashboard']);
     Route::post('logout', [AdminController::class, 'logout']);
+    Route::get('/favorites', [AdminController::class, 'allFavorites']);
 });
 
 // route FOOD
@@ -39,7 +41,8 @@ Route::post('/client/login', [ClientController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/client/dashboard', [ClientController::class, 'dashboard']);
-
+    Route::post('/client/favorite/toggle', [ClientController::class, 'toggleFavorite']);
+    Route::get('/client/favorites', [ClientController::class, 'favorites']);
     Route::get('/client/profile', [ClientController::class, 'profile']);
     Route::post('/client/logout', [ClientController::class, 'logout']);
     Route::get('/foods', [FoodController::class, 'index']);    

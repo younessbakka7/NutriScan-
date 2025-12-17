@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Food;
+ use App\Models\Favorite;
+
 
 
 class ClientController extends Controller
@@ -90,4 +92,41 @@ public function dashboard(Request $request) {
             'message' => 'Logout successful'
         ]);
     }
+
+    // post Favorite
+
+public function toggleFavorite(Request $request)
+{
+    $request->validate([
+        'food_id' => 'required|exists:foods,id'
+    ]);
+
+    $user = $request->user(); 
+    $foodId = $request->food_id;
+
+      
+    $favorite = Favorite::where('user_id', $user->id)
+                        ->where('food_id', $foodId)
+                        ->first();
+
+    if ($favorite) {
+        $favorite->delete(); 
+        return response()->json(['favorite' => false]);
+    }
+
+    
+    Favorite::create([
+        'user_id' => $user->id,
+        'food_id' => $foodId,
+    ]);
+
+    return response()->json(['favorite' => true]);
+}
+//get all favorite
+public function favorites(Request $request) {
+    $user = $request->user();
+    $favorites = Favorite::where('user_id', $user->id)->pluck('food_id');  
+    return response()->json(['favorites' => $favorites]);
+}
+
 }

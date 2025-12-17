@@ -7,6 +7,7 @@ import { router } from "expo-router";
 import ClientHome from "./clientHome";
 import ClientProfile from "./profile";
 import ClientFoods from "./clientFoods";
+import ScanScreen from "./ScanScreen";
 
 
 
@@ -37,16 +38,7 @@ function Favorites() {
 }
 
 // Composant Settings
-function Settings() {
-  return (
-    <View style={styles.pageContainer}>
-      <Text style={styles.pageTitle}>Scanner</Text>
-      <View style={styles.card}>
-        <Text style={styles.cardText}>Scanner le code-barres</Text>
-      </View>
-    </View>
-  );
-}
+
 
 export default function ClientDashboard() {
   const [selectedTab, setSelectedTab] = useState("Home");
@@ -54,7 +46,6 @@ export default function ClientDashboard() {
   const tabs = [
     { name: "Home", icon: <MaterialIcons name="home" size={24} color="#fff" /> },
     { name: "Foods", icon: <MaterialIcons name="restaurant" size={24} color="#fff" /> },
-    { name: "Favorites", icon: <MaterialIcons name="favorite" size={24} color="#fff" /> },
     { name: "Profile", icon: <MaterialIcons name="person" size={24} color="#fff" /> },
     { name: "Scan", icon: <MaterialIcons name="qr-code-scanner" size={24} color="#fff" /> },
     { name: "Logout", icon: <MaterialIcons name="logout" size={24} color="#fff" />, isLogout: true }
@@ -85,7 +76,7 @@ export default function ClientDashboard() {
       case "Foods": return <Foods />;
       case "Profile": return <Profile />;
       case "Favorites": return <Favorites />;
-      case "Scan": return <Settings />;
+      case "Scan": return <ScanScreen />;
       default: return <ClientHome />;
     }
   };

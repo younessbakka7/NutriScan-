@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+ use App\Models\Favorite;
 
 class AdminController extends Controller
 {
@@ -62,6 +63,45 @@ class AdminController extends Controller
             'created_at' => $admin->created_at->toDateTimeString()
         ]
     ]);
+
+    
+
+}
+// Lister tous les clients
+    public function clientList()
+    {
+    $users = User::where('role', 'client')->get();
+    return response()->json([
+        'users' => $users
+    ]);
+}
+
+    // Supprimer un client
+    public function clientdestroy($id)
+    {
+        $client = User::where('role', 'client')->find($id);
+        if (!$client) {
+            return response()->json(['message' => 'Client not found'], 404);
+        }
+
+        $client->delete();
+        return response()->json(['message' => 'Client deleted successfully']);
+    }
+
+    //get all allFavorites
+public function allFavorites()
+{
+    try {
+        // Avec relations client et food
+        $favorites = Favorite::with(['client', 'food'])->get();
+
+        return response()->json($favorites, 200);
+    } catch (\Exception $e) {
+        return response()->json([
+            'message' => 'Erreur serveur',
+            'error' => $e->getMessage()
+        ], 500);
+    }
 }
 
     
